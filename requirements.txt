@@ -1,0 +1,7 @@
+numpy
+torch
+supabase
+datetime
+pillow
+opencv-python
+ultralytics
