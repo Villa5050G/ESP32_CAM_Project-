@@ -4,9 +4,9 @@ import os
 import tempfile
 from datetime import datetime
 from PIL import Image
-import cv2  # Asegúrate de tener instalado opencv-python
+import cv2 
 from supabase import create_client
-from ultralytics import YOLO  # Importar YOLO de ultralytics
+from ultralytics import YOLO  
 
 # ======================
 # Configuración
@@ -17,7 +17,6 @@ SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJ
 SOURCE_BUCKET = "objetos"
 DESTINATION_BUCKET = "deteccion"
 
-# Usar ruta relativa para el modelo (se debe ubicar en la carpeta principal del proyecto)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_PATH = os.path.join(BASE_DIR, "best2.pt")
 
@@ -25,7 +24,7 @@ MODEL_PATH = os.path.join(BASE_DIR, "best2.pt")
 # Inicializar clientes
 # ======================
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
-model = YOLO(MODEL_PATH)  # Cargar modelo YOLOv5
+model = YOLO(MODEL_PATH) 
 
 # ======================
 # Funciones auxiliares
@@ -45,8 +44,8 @@ def descargar_imagen_temporal(nombre_archivo):
 def procesar_imagen_yolov5(ruta_imagen):
     """Realiza la detección con el modelo YOLOv5."""
     results = model(ruta_imagen)
-    results_img = results[0].plot()  # Obtener la imagen con detecciones
-    # Convertir imagen BGR a RGB para PIL
+    results_img = results[0].plot() 
+   
     image_rgb = cv2.cvtColor(results_img, cv2.COLOR_BGR2RGB)
     return Image.fromarray(image_rgb)
 
@@ -141,12 +140,12 @@ class App:
         self.root.title("App de Procesamiento de Imágenes")
         self.root.geometry("600x400")
 
-        # Variable para el intervalo de ejecución (en minutos)
+       
         self.sleep_time = tk.IntVar(value=0)
-        self.auto_interval = None  # Intervalo en minutos para ejecución automática
-        self.after_id = None  # ID del 'after' programado (para poder cancelarlo)
+        self.auto_interval = None  
+        self.after_id = None 
 
-        # Área de texto que simula una terminal para mostrar logs
+      
         self.text_widget = tk.Text(root, height=15, width=70)
         self.text_widget.pack(pady=10)
         
